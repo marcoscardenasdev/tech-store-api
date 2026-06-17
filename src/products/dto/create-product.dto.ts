@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsBoolean, IsIn, IsInt, IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { IsBoolean, IsInt, IsNumber, IsOptional, IsPositive, IsString, MaxLength, Min, MinLength } from "class-validator";
 
 export class CreateProductDto {
 
@@ -26,12 +26,10 @@ export class CreateProductDto {
     @Type(() => Number)
     public stock: number;
 
-    @IsIn(['smartphone',
-    'laptop',
-    'tablet',
-    'accesory',
-    'wearable'])
-    public category: string;
+    @IsInt()
+    @IsPositive()
+    @Type(() => Number)
+    public categoryId: number;
 
     @IsOptional()
     @IsBoolean()
@@ -43,14 +41,14 @@ export class CreateProductDto {
         description: string,
         price: number,
         stock: number,
-        category: string,
+        categoryId: number,
         isActive: boolean,
     ) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
-        this.category = category;
+        this.categoryId = categoryId;
         this.isActive = isActive;
     }
 }
