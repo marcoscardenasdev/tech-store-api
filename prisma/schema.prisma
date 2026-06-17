@@ -19,8 +19,29 @@ model Product {
   description String
   price Float
   stock Int
-  category String
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
   isActive Boolean @default(true)
+  reviews Review[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String
+  products Product[]
+}
+
+
+model Review {
+  id Int @id @default(autoincrement())
+  comment String
+  rating Int
+  reviewerName String
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+  createdAt DateTime @default(now())
 }
